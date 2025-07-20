@@ -1,6 +1,5 @@
-let score = 0;
-let current = 0;
-let answered = false;
+
+
 
 const questions = [
   {
@@ -70,46 +69,38 @@ const questions = [
   }
 ];
 
-
-
+let current = 0;
+let score = 0;
 
 function loadQuestion() {
-  answered = false;
-  const q = questions[current];
-  document.getElementById("question").innerText = q.question;
+  const questionEl = document.getElementById("question");
+  const optionsEl = document.getElementById("options");
+  const resultEl = document.getElementById("result");
 
-  const optionsDiv = document.getElementById("options");
-  optionsDiv.innerHTML = "";
+  // Clear previous options
+  optionsEl.innerHTML = "";
+  resultEl.classList.add("hidden");
 
-  q.options.forEach((option, i) => {
+  const currentQ = questions[current];
+  questionEl.textContent = currentQ.question;
+
+  currentQ.options.forEach((option, index) => {
     const btn = document.createElement("button");
-    btn.innerText = option;
-    btn.onclick = () => showFeedback(i, btn);
-    optionsDiv.appendChild(btn);
+    btn.textContent = option;
+    btn.addEventListener("click", () => {
+      if (index === currentQ.correct) {
+        score++;
+      }
+      document.getElementById("next-btn").style.display = "block";
+    });
+    optionsEl.appendChild(btn);
   });
 
-  document.getElementById("result").innerText = "";
-  document.getElementById("result").classList.add("hidden");
+  // Hide Next button until an option is selected
+  document.getElementById("next-btn").style.display = "none";
 }
 
-function showFeedback(selected, btn) {
-  if (answered) return;
-  answered = true;
-
-  const correctIndex = questions[current].correct;
-  const resultBox = document.getElementById("result");
-
-  if (selected === correctIndex) {
-    resultBox.innerText = "✅ Correct!";
-    resultBox.style.color = "green";
-    score++;
-  } else {
-    resultBox.innerText = `❌ Wrong! Correct answer: ${questions[correctIndex]}`;
-    resultBox.style.color = "red";
-  }
-
-  resultBox.classList.remove("hidden");
-}
+// Final score display
 function showFinalScore() {
   let message = "";
   switch (score) {
@@ -123,12 +114,9 @@ function showFinalScore() {
       message = "😄 You scored 8/10 — Not bad! But hey... did your brain sneeze on one question?";
       break;
     default:
-      message = score < 8 
-        ? `📚 You scored ${score}/10. I think you should revise the chapter again!`
-        : `You scored ${score}/10.`;
+      message = `📚 You scored ${score}/10. I think you should revise the chapter again!`;
   }
 
-  // Display the message
   const quizBox = document.getElementById("quiz-box");
   quizBox.innerHTML = `
     <h2>${message}</h2>
@@ -136,14 +124,7 @@ function showFinalScore() {
   `;
 }
 
-
-  document.getElementById("quiz-box").innerHTML = `
-    <h2>Quiz Completed!</h2>
-    <p>${message}</p>
-    <button onclick="restartQuiz()">🔁 Play Again</button>
-  `;
-}
-
+// Next button handler
 document.getElementById("next-btn").addEventListener("click", () => {
   current++;
   if (current < questions.length) {
@@ -153,28 +134,5 @@ document.getElementById("next-btn").addEventListener("click", () => {
   }
 });
 
-function restartQuiz() {
-  current = 0;
-  score = 0;
-
-  document.getElementById("quiz-box").innerHTML = `
-    <div id="question">Loading question...</div>
-    <div id="options"></div>
-    <div id="result" class="hidden"></div>
-    <button id="next-btn">Next</button>
-  `;
-
-  // Reattach event listener to new button
-  document.getElementById("next-btn").addEventListener("click", () => {
-    current++;
-    if (current < questions.length) {
-      loadQuestion();
-    } else {
-      showFinalScore();
-    }
-  });
-
-  loadQuestion();
-
-
-
+// Load the first question
+loadQuestion();
