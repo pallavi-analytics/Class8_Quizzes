@@ -175,6 +175,6 @@ function restartQuiz() {
   });
 
   loadQuestion();
-}
 
-loadQuestion();
+
+
