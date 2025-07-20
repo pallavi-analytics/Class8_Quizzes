@@ -1,0 +1,92 @@
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #fdf6e3;
+  background-image: url('https://www.transparenttextures.com/patterns/cloudy.png'); /* Soft background */
+  margin: 0;
+  padding: 0;
+  animation: fadeIn 1s ease-in-out;
+}
+
+.container {
+  max-width: 600px;
+  margin: 50px auto;
+  padding: 30px;
+  background-color: #ffffffcc;
+  border-radius: 12px;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+  text-align: center;
+  backdrop-filter: blur(5px);
+  animation: slideUp 0.6s ease-in-out;
+}
+
+h1 {
+  color: #2e8b57;
+  margin-bottom: 5px;
+  font-size: 2em;
+}
+
+h2 {
+  color: #444;
+  margin-top: 0;
+  font-weight: normal;
+  font-size: 1.2em;
+}
+
+#quiz-box {
+  margin-top: 20px;
+}
+
+#question {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+#options button {
+  display: block;
+  margin: 8px auto;
+  padding: 12px 20px;
+  width: 80%;
+  font-size: 16px;
+  cursor: pointer;
+  border: 2px solid #2e8b57;
+  border-radius: 10px;
+  background-color: #e6f5e9;
+  transition: all 0.2s ease-in-out;
+}
+
+#options button:hover {
+  background-color: #b9edc7;
+  transform: scale(1.03);
+}
+
+#next-btn {
+  margin-top: 25px;
+  padding: 12px 24px;
+  font-size: 16px;
+  background-color: #2e8b57;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+#next-btn:hover {
+  background-color: #246f45;
+}
+
+.hidden {
+  display: none;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { transform: translateY(30px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
